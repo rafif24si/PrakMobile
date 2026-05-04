@@ -2,6 +2,7 @@ package com.example.rafifapps.Home.pertemuan_7
 
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.OnBackPressedCallback // Tambahan import wajib
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -14,7 +15,6 @@ class SevenActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySevenBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
@@ -26,7 +26,8 @@ class SevenActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        // Menampilkan fragment pertama secara default
+
+        // Menampilkan fragment pertama secara default (Masuk ke antrean ke-1)
         replaceFragment(SatuFragment())
 
         // Setup event click untuk mengganti fragment
@@ -41,33 +42,45 @@ class SevenActivity : AppCompatActivity() {
         binding.btnFragment3.setOnClickListener {
             replaceFragment(TigaFragment())
         }
+
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
-
             title = "Seven Activity"
             subtitle = "Ini adalah subtitle"
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
 
-
-
+        // --- SOLUSI MENCEGAH LAYAR PUTIH (Tombol Back Fisik HP) ---
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (supportFragmentManager.backStackEntryCount > 1) {
+                    supportFragmentManager.popBackStack()
+                } else {
+                    finish()
+                }
+            }
+        })
     }
+
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(binding.fragmentContainer.id, fragment)
-            .addToBackStack(null)
+            .addToBackStack(null) // Tetap aktif sesuai instruksi dosen
             .commit()
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                onBackPressedDispatcher.onBackPressed()
+                // --- SOLUSI MENCEGAH LAYAR PUTIH (Tombol Back Panah Kiri Atas) ---
+                if (supportFragmentManager.backStackEntryCount > 1) {
+                    supportFragmentManager.popBackStack()
+                } else {
+                    finish()
+                }
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
