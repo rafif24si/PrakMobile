@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:fontFamily="@font/ubuntubold"
         android:textSize="40sp"
+        android:textColor="@android:color/white"
         android:text="Ini Tab A"/>
 
 </FrameLayout>

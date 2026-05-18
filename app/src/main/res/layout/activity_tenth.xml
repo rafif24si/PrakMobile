@@ -30,11 +30,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Ini Halaman Pertemuan 10"
-        android:textSize="18sp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
