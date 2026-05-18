@@ -3,7 +3,6 @@ package com.example.rafifapps.Home
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +10,13 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import com.example.rafifapps.AuthActivity
+import com.example.rafifapps.Home.pertemuan_10.TenthActivity
 import com.example.rafifapps.Home.pertemuan_2.SecondActivity
 import com.example.rafifapps.Home.pertemuan_3.ThirdResultActivity
 import com.example.rafifapps.Home.pertemuan_4.FourthActivity
 import com.example.rafifapps.Home.pertemuan_5.FifthActivity
 import com.example.rafifapps.Home.pertemuan_7.SevenActivity
 import com.example.rafifapps.Home.pertemuan_9.NinthActivity
-import com.example.rafifapps.R
 import com.example.rafifapps.databinding.FragmentHomeBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -78,6 +77,11 @@ class HomeFragment : Fragment() {
         /** Navigasi Pertemuan 9 */
         binding.btnPertemuan9.setOnClickListener {
             startActivity(Intent(requireContext(), NinthActivity::class.java))
+        }
+
+        /** Navigasi Pertemuan 10 */
+        binding.btnPertemuan10.setOnClickListener {
+            startActivity(Intent(requireContext(), TenthActivity::class.java))
         }
 
         /** Logout Logic */
