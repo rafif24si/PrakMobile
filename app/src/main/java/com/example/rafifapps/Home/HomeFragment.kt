@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
+import androidx.lifecycle.lifecycleScope
 import com.example.rafifapps.AuthActivity
 import com.example.rafifapps.Home.pertemuan_10.TenthActivity
 import com.example.rafifapps.Home.pertemuan_2.SecondActivity
@@ -17,8 +18,10 @@ import com.example.rafifapps.Home.pertemuan_4.FourthActivity
 import com.example.rafifapps.Home.pertemuan_5.FifthActivity
 import com.example.rafifapps.Home.pertemuan_7.SevenActivity
 import com.example.rafifapps.Home.pertemuan_9.NinthActivity
+import com.example.rafifapps.data.api.CatFactApiClient
 import com.example.rafifapps.databinding.FragmentHomeBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
@@ -100,7 +103,24 @@ class HomeFragment : Fragment() {
                 }
                 .show()
         }
+        loadCatFact()
+
+        binding.btnRefresh.setOnClickListener {
+            loadCatFact()
+        }
     }
+
+    private fun loadCatFact() {
+        lifecycleScope.launch {
+            try {
+                val response = CatFactApiClient.apiService.getCatFact()
+                binding.tvCatFact.text = "\"${response.fact}\""
+            } catch (e: Exception) {
+                binding.tvCatFact.text = "Gagal mengambil fakta kucing."
+            }
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
