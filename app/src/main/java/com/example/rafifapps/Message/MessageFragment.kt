@@ -1,12 +1,18 @@
 package com.example.rafifapps.Message
 
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import com.example.rafifapps.Message.tutorial.TutorialMessageActivity
+import com.example.rafifapps.R
 import com.example.rafifapps.databinding.FragmentMessageBinding
 
 class MessageFragment : Fragment() {
@@ -46,16 +52,33 @@ class MessageFragment : Fragment() {
         (requireActivity() as AppCompatActivity).supportActionBar?.apply {
             title = "Message"
         }
+        setHasOptionsMenu(true)
 
-        // ==========================================
-        // TAHAP 7: Terapkan MessageAdapter
-        // ==========================================
         val adapter = MessageAdapter(requireContext(), messageList)
 
-        // Memasang adapter ke komponen ListView di XML
         binding.listMessageItems.adapter = adapter
-        // ==========================================
     }
+
+    // ================= ADDED CODE =================
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.message_toolbar_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_tutorial -> {
+                // Membuka TutorialMessageActivity saat tombol menu diklik
+                val intent = Intent(requireContext(), TutorialMessageActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    // ==============================================
 
     override fun onDestroyView() {
         super.onDestroyView()
